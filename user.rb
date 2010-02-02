@@ -14,7 +14,6 @@ module GoogleReader
     def initialize(opthash={})
       @email = opthash[:email]
       @password = opthash[:password]
-      
     end
     
     # the url as a string and the args as a hash
@@ -38,10 +37,12 @@ module GoogleReader
     private
 
     def request(uri,request)
+      # add the cookie to the http header
       request.add_field('Cookie',user_cookie)
       res = Net::HTTP.start(uri.host,uri.port) do |http|
         http.request(request)
       end
+      # TODO: use better exception
       raise "something went wrong" if res.code != '200'
       res.body
     end
@@ -60,7 +61,8 @@ module GoogleReader
     end
 
     def user_cookie
-      CGI::Cookie::new('name' => 'SID' , 'value' => sid , 'path' => '/' , 'domain'  => '.google.com').to_s
+      CGI::Cookie::new('name' => 'SID' , 'value' => sid , 
+                       'path' => '/' , 'domain'  => '.google.com').to_s
     end
 
     def sid
