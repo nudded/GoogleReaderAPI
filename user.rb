@@ -8,8 +8,7 @@ module GoogleReader
     require "net/https"
     require "uri"
     
-    attr_accessor :email
-    attr_reader :password ,:base_url
+    attr_accessor :email ,:password
     
     def initialize(opthash={})
       @email = opthash[:email]
