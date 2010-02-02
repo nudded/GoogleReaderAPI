@@ -8,3 +8,4 @@ puts
 
 api = GoogleReader::API.new(:email=>'willemstoon@gmail.com',:password => pass)
 p api.unread_count
+p api.user_info

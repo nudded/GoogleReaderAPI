@@ -26,13 +26,25 @@ module GoogleReader
     def unread
       fetch_unread['unreadcounts']
     end
+
+    def user_info
+      fetch_user_info
+    end
     
     private
     
     # will return the json object for the unread_request
     def fetch_unread
-      link = BASE_URL + "unread-count"
-      JSON[@user.get_request(link,:allcomments => true,:output => :json,:ck => Time.now.to_i)]
+      get_link "unread-count" , :allcomments => true,:output => :json,:ck => Time.now.to_i
+    end
+    
+    def fetch_user_info
+      get_link "user-info" ,:ck => Time.now.to_i
+    end
+    
+    def get_link(link,args={})
+      link = BASE_URL + link
+      JSON[@user.get_request(link,args)]
     end
     
   end
