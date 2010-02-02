@@ -6,6 +6,7 @@ module GoogleReader
   class API
     
     require "user"
+    require "json"
     
     # specify email and password in the arg hash
     def initialize(opthash)
@@ -15,7 +16,7 @@ module GoogleReader
     # get the unread count for the current user
     def unread_count
       link = GoogleReader::BASE_URL + "unread-count"
-      @user.get_request(link,:allcomments => true,:output => :json,:ck => Time.now.to_i)
+      JSON[@user.get_request(link,:allcomments => true,:output => :json,:ck => Time.now.to_i)]
     end
     
   end
