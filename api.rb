@@ -16,10 +16,13 @@ module GoogleReader
     # get the unread count for the current user
     def unread_count
       link = GoogleReader::BASE_URL + "unread-count"
-      JSON[@user.get_request(link,:allcomments => true,:output => :json,:ck => Time.now.to_i)]
+      json = JSON[@user.get_request(link,:allcomments => true,:output => :json,:ck => Time.now.to_i)]
+      if json['unreadcounts'].first
+        json['unreadcounts'].first['count']
+      else
+        0
+      end
     end
-    
   end
-  
-  
+
 end
