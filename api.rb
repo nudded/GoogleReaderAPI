@@ -16,12 +16,24 @@ module GoogleReader
       @email, @password = email, password
     end
     
+    # get the number of unread items for a feed_url
+    # feed_url can be a regular string (it will try to match it)
+    # better will be to use the feed url, since this will match only one
+    # this will only return the first one found. 
     def unread(feed_url=nil)
       feed_url = "/state/com.google/reading-list" if ! feed_url
       feed = fetch_unread['unreadcounts'].find {|e| e['id'] =~ Regexp.new(feed_url)}
       feed ? feed['count'] : 0
     end
 
+    # this will return the user info as a hash
+    # example:
+    # "userId":"01723985652832499840",
+    # "userName":"username",
+    # "userProfileId":"123456789123456789123",
+    # "userEmail":"username@gmail.com",
+    # "isBloggerUser":true,
+    # "signupTimeSec":1234515320
     def user_info
       @user_info ||= fetch_user_info
     end
