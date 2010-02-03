@@ -6,6 +6,7 @@ pass = gets.chomp
 `stty echo`
 puts
 
-api = GoogleReader::API.new(:email=>'willemstoon@gmail.com',:password => pass)
+api = GoogleReader::Api.new 'willemstoon@gmail.com', pass
 p api.unread_count
+p api.unread
 p api.user_info

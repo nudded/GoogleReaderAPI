@@ -1,19 +1,12 @@
 module GoogleReader
   
-  # use this class to make api calls
+  # include this module if you want to do api calls
   # either use get or post (depending on your needs)
-  class User
+  module ApiHelper
     
     require "cgi"
     require "net/https"
     require "uri"
-    
-    attr_accessor :email ,:password
-    
-    def initialize(opthash={})
-      @email = opthash[:email]
-      @password = opthash[:password]
-    end
     
     # the url as a string and the args as a hash
     # e.g. :allcomments => true etc...
