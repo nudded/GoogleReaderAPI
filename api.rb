@@ -5,7 +5,7 @@ module GoogleReader
     
     BASE_URL = "http://www.google.com/reader/api/0/"
     
-    require "user"
+    require "api_helper"
     require "json"
     
     include GoogleReader::ApiHelper
@@ -16,22 +16,14 @@ module GoogleReader
       @email, @password = email, password
     end
     
-    # get the unread count for the current user
-    def unread_count
-      json = fetch_unread
-      if json['unreadcounts'].first
-        json['unreadcounts'].first['count']
-      else
-        0
-      end
-    end
-    
-    def unread
-      fetch_unread['unreadcounts']
+    def unread(feed_url=nil)
+      feed_url = "/state/com.google/reading-list" if ! feed_url
+      feed = fetch_unread['unreadcounts'].find {|e| e['id'] =~ Regexp.new(feed_url)}
+      feed ? feed['count'] : 0
     end
 
     def user_info
-      fetch_user_info
+      @user_info ||= fetch_user_info
     end
     
     private
