@@ -21,7 +21,9 @@ module GoogleReader
     # better will be to use the feed url, since this will match only one
     # this will only return the first one found. 
     def unread(feed_url=nil)
+      # this url appears to be used by google to give the total count
       feed_url = "/state/com.google/reading-list" if ! feed_url
+      
       feed = fetch_unread['unreadcounts'].find {|e| e['id'] =~ Regexp.new(feed_url)}
       feed ? feed['count'] : 0
     end
