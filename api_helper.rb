@@ -35,7 +35,10 @@ module GoogleReader
         http.request(request)
       end
       # TODO: use better exception
-      raise "something went wrong" if res.code != '200'
+      if res.code != '200'
+        p res.body
+        raise "something went wrong" 
+      end
       res.body
     end
 
