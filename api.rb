@@ -20,7 +20,7 @@ module GoogleReader
     # feed_url can be a regular string (it will try to match it)
     # better will be to use the feed url, since this will match only one
     # this will only return the first one found. 
-    def unread(feed_url=nil)
+    def unread_count(feed_url=nil)
       # this url appears to be used by google to give the total count
       feed_url = "/state/com.google/reading-list" if ! feed_url
       
