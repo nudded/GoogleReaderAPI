@@ -41,8 +41,10 @@ module GoogleReader
       @user_info ||= fetch_user_info
     end
     
+    # will return the an array of all the subscriptions
+    # which are for now just hashes
     def subscriptions
-      get_link "atom/user/#{user_info['userId']}/pref/com.google/subscriptions" 
+      get_link("atom/user/#{user_info['userId']}/pref/com.google/subscriptions").items
     end
     
     private
