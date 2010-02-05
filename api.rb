@@ -44,15 +44,17 @@ module GoogleReader
     
     # will return the json object for the unread_request
     def fetch_unread
-      get_link "unread-count" , :allcomments => true,:output => :json,:ck => Time.now.to_i
+      get_link "unread-count" , :allcomments => true,:output => :json
     end
     
     def fetch_user_info
-      get_link "user-info" ,:ck => Time.now.to_i
+      get_link "user-info" 
     end
     
     def get_link(link,args={})
       link = BASE_URL + link
+      # ck is the current unix timestamp
+      args[:ck] = Time.now.to_i unless args[:ck]
       JSON[get_request(link,args)]
     end
     
