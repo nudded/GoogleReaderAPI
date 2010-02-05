@@ -42,7 +42,7 @@ module GoogleReader
     end
     
     def subscriptions
-      get_link "atom/user/#{user_info['userId']}/pref/com.google/subscriptions" d
+      get_link "atom/user/#{user_info['userId']}/pref/com.google/subscriptions" 
     end
     
     private
