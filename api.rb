@@ -3,11 +3,9 @@ module GoogleReader
   # the main api
   class Api
     
-    BASE_URL = "http://www.google.com/reader/"
     
     require "api_helper"
     require "json"
-    require "simple-rss"
     
     include GoogleReader::ApiHelper
     
@@ -44,7 +42,7 @@ module GoogleReader
     # will return the an array of all the subscriptions
     # which are for now just hashes
     def subscriptions
-      get_link("atom/user/#{user_info['userId']}/pref/com.google/subscriptions").items
+      get_link "api/0/subscription/list" , :output => :json
     end
     
     private
@@ -58,19 +56,7 @@ module GoogleReader
       get_link "api/0/user-info" , :output => :json
     end
     
-    def get_link(link,args={})
-      link = BASE_URL + link
-      # ck is the current unix timestamp
-      args[:ck] = Time.now.to_i unless args[:ck]
-      result = get_request(link,args)
-      parse result
-    end
-    
-    def parse(xml_or_json)
-      JSON[xml_or_json]
-    rescue
-      SimpleRSS.parse xml_or_json
-    end
+   
     
   end
 

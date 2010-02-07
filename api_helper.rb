@@ -8,12 +8,13 @@ module GoogleReader
     require "net/https"
     require "uri"
     
-    # the url as a string and the args as a hash
-    # e.g. :allcomments => true etc...
-    def get_request(url,args)
-      uri = URI.parse url
-      req = Net::HTTP::Get.new("#{uri.path}?#{argument_string(args)}")
-      request(uri,req)
+    BASE_URL = "http://www.google.com/reader/"
+    
+    # do a get request to the link
+    # args is a hash of values that should be used in the request
+    def get_link(link,args={})
+      link = BASE_URL + link
+      get_request(link,args)
     end
     
     # url as a string
@@ -27,6 +28,18 @@ module GoogleReader
     end
     
     private
+
+    # the url as a string and the args as a hash
+    # e.g. :allcomments => true etc...
+    def get_request(url,args)
+      uri = URI.parse url
+      
+      # ck is the current unix timestamp
+      args[:ck] = Time.now.to_i unless args[:ck]
+      
+      req = Net::HTTP::Get.new("#{uri.path}?#{argument_string(args)}")
+      request(uri,req)
+    end
 
     def request(uri,request)
       # add the cookie to the http header
