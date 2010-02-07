@@ -8,4 +8,4 @@ puts
 
 user = GoogleReader::User.new 'willemstoon@gmail.com', pass
 p user.info
-# p user.subscriptions
+p user.subscriptions.feeds
