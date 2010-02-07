@@ -1,8 +1,6 @@
 module GoogleReader
   
-  # include this module if you want to do api calls
-  # either use get or post (depending on your needs)
-  module ApiHelper
+  class Api
     
     require "cgi"
     require "net/https"
