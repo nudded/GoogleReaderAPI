@@ -2,17 +2,20 @@ module GoogleReader
   
   class User
     
-    require "api_helper"
-    include ApiHelper
+    require "api"
+    require "json"
+    # maybe someone would like to access the api for a user
+    attr_reader :api
     
     def initialize(email,password)
-      @email,@password = email,password
+      @api = GoogleReader::Api::new email,password
     end
     
     def info
-      @api.user_info
+      JSON[api.get_link "api/0/user-info"]
     end
-
+    
+    
     
     
   end
