@@ -9,7 +9,7 @@ module GoogleReader
     BASE_URL = "http://www.google.com/reader/"
     
     def initialize(email,password)
-      @email, @password = email, password
+      request_sid(email,password)
     end
     
     # do a get request to the link
@@ -76,19 +76,18 @@ module GoogleReader
     end
 
     def sid
-      @sid ||= request_sid
+      @sid 
     end
     
-    def request_sid
-      url = URI.parse "https://www.google.com/accounts/ClientLogin?service=reader&Email=#{@email}&Passwd=#{@password}"
+    def request_sid(email,password)
+      url = URI.parse "https://www.google.com/accounts/ClientLogin?service=reader&Email=#{email}&Passwd=#{password}"
       http = Net::HTTP.new(url.host,url.port)
       http.use_ssl = true
       res,data = http.get("#{url.path}?#{url.query}")
 
       raise "could not authenticate" if res.code != "200"
       
-      data.match(/SID=(.+?)\n/)[1]
-      
+      @sid = data.match(/SID=(.+?)\n/)[1]
     end
     
   end
