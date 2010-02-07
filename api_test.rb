@@ -7,7 +7,5 @@ pass = gets.chomp
 puts
 
 api = GoogleReader::Api.new 'willemstoon@gmail.com', pass
-p api.unread_count
-p api.unread_count 'news.ycombinator.com'
 p api.user_info
 p api.subscriptions
