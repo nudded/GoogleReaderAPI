@@ -1,63 +1,94 @@
 module GoogleReader
-
-  # the main api
-  class Api
+  
+  # include this module if you want to do api calls
+  # either use get or post (depending on your needs)
+  module ApiHelper
     
+    require "cgi"
+    require "net/https"
+    require "uri"
     
-    require "api_helper"
-    require "json"
+    BASE_URL = "http://www.google.com/reader/"
     
-    include GoogleReader::ApiHelper
-    
-    attr_accessor :email,:password
-    
-    def initialize(email,password)
-      @email, @password = email, password
+    # do a get request to the link
+    # args is a hash of values that should be used in the request
+    def get_link(link,args={})
+      link = BASE_URL + link
+      get_request(link,args)
     end
     
-    # get the number of unread items for a feed_url
-    # feed_url can be a regular string (it will try to match it)
-    # better will be to use the feed url, since this will match only one
-    # this will only return the first one found. 
-    def unread_count(feed_url=nil)
-      # this url appears to be used by google to give the total count
-      feed_url = "/state/com.google/reading-list" if ! feed_url
-      
-      feed = fetch_unread['unreadcounts'].find {|e| e['id'] =~ Regexp.new(feed_url)}
-      feed ? feed['count'] : 0
-    end
-
-    # this will return the user info as a hash
-    # example:
-    # "userId":"01723985652832499840",
-    # "userName":"username",
-    # "userProfileId":"123456789123456789123",
-    # "userEmail":"username@gmail.com",
-    # "isBloggerUser":true,
-    # "signupTimeSec":1234515320
-    def user_info
-      @user_info ||= fetch_user_info
-    end
-    
-    # will return the an array of all the subscriptions
-    # which are for now just hashes
-    def subscriptions
-      get_link "api/0/subscription/list" , :output => :json
+    # url as a string
+    # the post data as a hash
+    def post_request(url,args)
+      uri = URI.parse(url)
+      args[:T] = token
+      req = Net::HTTP::Post.new(uri.path)
+      req.set_form_data(args)
+      request(uri,req)
     end
     
     private
-    
-    # will return the json object for the unread_request
-    def fetch_unread
-      get_link "api/0/unread-count" , :allcomments => true,:output => :json
+
+    # the url as a string and the args as a hash
+    # e.g. :allcomments => true etc...
+    def get_request(url,args)
+      uri = URI.parse url
+      
+      # ck is the current unix timestamp
+      args[:ck] = Time.now.to_i unless args[:ck]
+      
+      req = Net::HTTP::Get.new("#{uri.path}?#{argument_string(args)}")
+      request(uri,req)
     end
-    
-    def fetch_user_info
-      get_link "api/0/user-info" , :output => :json
+
+    def request(uri,request)
+      # add the cookie to the http header
+      request.add_field('Cookie',user_cookie)
+      res = Net::HTTP.start(uri.host,uri.port) do |http|
+        http.request(request)
+      end
+      # TODO: use better exception
+      if res.code != '200'
+        p res.body
+        raise "something went wrong" 
+      end
+      res.body
     end
-    
+
+    # returns the argumentstring based on the hash it is given
+    def argument_string(args)
+      args.to_a.map { |v| "#{v[0]}=#{v[1]}" }.join('&')
+    end
    
+    def token
+      url = URI.parse "http://www.google.com/reader/api/0/token"
+      res = Net::HTTP.start(url.host,url.port) do |http|
+        http.get(url.path,"Cookie" => user_cookie)
+      end
+      res.body
+    end
+
+    def user_cookie
+      CGI::Cookie::new('name' => 'SID' , 'value' => sid , 
+                       'path' => '/' , 'domain'  => '.google.com').to_s
+    end
+
+    def sid
+      @sid ||= request_sid
+    end
+    
+    def request_sid
+      url = URI.parse "https://www.google.com/accounts/ClientLogin?service=reader&Email=#{email}&Passwd=#{password}"
+      http = Net::HTTP.new(url.host,url.port)
+      http.use_ssl = true
+      res,data = http.get("#{url.path}?#{url.query}")
+
+      raise "could not authenticate" if res.code != "200"
+      
+      data.match(/SID=(.+?)\n/)[1]
+      
+    end
     
   end
-
+  
 end
