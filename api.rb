@@ -86,6 +86,8 @@ module GoogleReader
     end
     
     def request_sid(email,password)
+      password = CGI.escape(password)
+      email = CGI.escape(email)
       url = URI.parse "https://www.google.com/accounts/ClientLogin?service=reader&Email=#{email}&Passwd=#{password}"
       http = Net::HTTP.new(url.host,url.port)
       http.use_ssl = true

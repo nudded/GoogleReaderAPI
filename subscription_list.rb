@@ -16,7 +16,7 @@ module GoogleReader
     # feed => unread_count
     def unread_count
       hash = {}
-      each do {|feed| hash[feed] = feed.unread_count }
+      each { |feed| hash[feed] = feed.unread_count }
       hash
     end
     
