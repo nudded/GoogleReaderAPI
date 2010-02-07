@@ -11,13 +11,21 @@ module GoogleReader
       update
     end
     
+    # returns a hash
+    # with following pattern:
+    # feed => unread_count
+    def unread_count
+      hash = {}
+      each do {|feed| hash[feed] = feed.unread_count }
+      hash
+    end
+    
     def feeds
       @feeds
     end
 
     def each
-      @feeds.each {|i| yield i} if block_given?
-      @feeds.each
+      @feeds.each {|feed| yield feed}
     end
     
     private
