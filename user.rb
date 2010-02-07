@@ -3,6 +3,8 @@ module GoogleReader
   class User
     
     require "api"
+    require "subscription_list"
+    
     require "json"
     # maybe someone would like to access the api for a user
     attr_reader :api
@@ -15,9 +17,9 @@ module GoogleReader
       JSON[api.get_link "api/0/user-info"]
     end
     
-    
-    
+    def subscriptions
+      @subscriptions ||= GoogleReader::SubscriptionList.new @api
+    end
     
   end
-  
 end
