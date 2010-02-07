@@ -7,5 +7,6 @@ pass = gets.chomp
 puts
 
 user = GoogleReader::User.new 'willemstoon@gmail.com', pass
-p user.info
-p user.subscriptions.feeds
+# p user.info
+# p user.subscriptions.feeds
+puts user.subscriptions.feeds[5].unread_count
