@@ -16,7 +16,7 @@ module GoogleReader
     end
     
     def unread_count
-      entry = JSON[@api.get_link 'api/0/unread-count', :output => :json]['unreadcounts'].find {|h| h['id'] == "feed/#{url}"}
+      entry = JSON[@api.cached_unread_count]['unreadcounts'].find {|h| h['id'] == "feed/#{url}"}
       entry ? entry['count'] : 0
     end
   

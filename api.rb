@@ -5,11 +5,13 @@ module GoogleReader
     require "cgi"
     require "net/https"
     require "uri"
+    require "cache"
     
     BASE_URL = "http://www.google.com/reader/"
     
     def initialize(email,password)
       request_sid(email,password)
+      @cache = GoogleReader::Cache.new(10)
     end
     
     # do a get request to the link
@@ -27,6 +29,10 @@ module GoogleReader
       req = Net::HTTP::Post.new(uri.path)
       req.set_form_data(args)
       request(uri,req)
+    end
+    
+    def cached_unread_count
+      @cache['unread-count'] ||= get_link 'api/0/unread-count', :output => :json
     end
     
     private
