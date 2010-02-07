@@ -80,7 +80,7 @@ module GoogleReader
     end
     
     def request_sid
-      url = URI.parse "https://www.google.com/accounts/ClientLogin?service=reader&Email=#{email}&Passwd=#{password}"
+      url = URI.parse "https://www.google.com/accounts/ClientLogin?service=reader&Email=#{@email}&Passwd=#{@password}"
       http = Net::HTTP.new(url.host,url.port)
       http.use_ssl = true
       res,data = http.get("#{url.path}?#{url.query}")
