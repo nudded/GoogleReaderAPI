@@ -9,8 +9,4 @@ puts
 user = GoogleReader::User.new 'willemstoon@gmail.com', pass
 # p user.info
 # p user.subscriptions.feeds
-puts user.subscriptions.feeds[5].unread_count
-sleep 5
-puts user.subscriptions.feeds[5].unread_count
-sleep 12
-puts user.subscriptions.feeds[5].unread_count
+p user.subscriptions.unread_count
