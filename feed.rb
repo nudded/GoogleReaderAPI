@@ -15,6 +15,15 @@ module GoogleReader
       @api = api
     end
     
+    def unread_count
+      entry = JSON[@api.get_link 'api/0/unread-count', :output => :json]['unreadcounts'].find {|h| h['id'] == "feed/#{url}"}
+      entry ? entry['count'] : 0
+    end
+  
+    def unread_items
+      @api.get_link "atom/feed/#{url}", :xt => 'user/-/state/com.google/read'
+    end    
+    
     def inspect
       to_s
     end
