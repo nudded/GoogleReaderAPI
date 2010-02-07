@@ -8,6 +8,10 @@ module GoogleReader
     
     BASE_URL = "http://www.google.com/reader/"
     
+    def initialize(email,password)
+      @email, @password = email, password
+    end
+    
     # do a get request to the link
     # args is a hash of values that should be used in the request
     def get_link(link,args={})
