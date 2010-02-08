@@ -16,8 +16,8 @@ module GoogleReader
     end
     
     def unsubscribe
-      @api.post_link 'api/0/subscription/edit' :s => "feed/#{url}",
-                                               :ac => :unsubscribe
+      @api.post_link 'api/0/subscription/edit' , :s => "feed/#{url}",
+                                                 :ac => :unsubscribe
     end
     
     def unread_count
