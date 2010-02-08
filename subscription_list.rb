@@ -11,6 +11,11 @@ module GoogleReader
       update
     end
     
+    # returns the total unread count
+    def total_unread
+      inject(0) {|i,j| i+j.unread_count}
+    end
+    
     # returns a hash
     # with following pattern:
     # feed => unread_count

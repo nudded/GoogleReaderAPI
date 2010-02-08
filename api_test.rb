@@ -10,3 +10,4 @@ user = GoogleReader::User.new 'willemstoon@gmail.com', pass
 # p user.info
 # p user.subscriptions.feeds
 p user.subscriptions.unread_count
+p user.subscriptions.total_unread
