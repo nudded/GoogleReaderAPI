@@ -2,6 +2,7 @@ module GoogleReader
   module RssUtils 
     require "rss/atom"
     require "net/http"
+    require "net/https"
     require "hpricot"
 
     private
@@ -16,9 +17,9 @@ module GoogleReader
 
     def fetch_rss(url)
       uri = URI.parse url
-      Net::HTTP.start(uri.host,uri.port) do |http|
-        http.get(uri.path).body
-      end
+      http = Net::HTTP.new(uri.host,uri.port) 
+      http.use_ssl = true if uri.scheme == 'https'
+      http.get(uri.request_uri).body
     end
   end
 end
