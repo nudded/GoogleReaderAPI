@@ -21,6 +21,17 @@ module GoogleReader
       get_request(link,args)
     end
     
+    def post_link(link,args={})
+      link = BASE_URL + link
+      post_request(link,args)
+    end
+    
+    def cached_unread_count
+      @cache['unread-count'] ||= get_link 'api/0/unread-count', :output => :json
+    end
+    
+    private
+
     # url as a string
     # the post data as a hash
     def post_request(url,args)
@@ -30,12 +41,6 @@ module GoogleReader
       req.set_form_data(args)
       request(uri,req)
     end
-    
-    def cached_unread_count
-      @cache['unread-count'] ||= get_link 'api/0/unread-count', :output => :json
-    end
-    
-    private
 
     # the url as a string and the args as a hash
     # e.g. :allcomments => true etc...
