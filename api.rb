@@ -11,7 +11,7 @@ module GoogleReader
     
     def initialize(email,password)
       request_sid(email,password)
-      @cache = GoogleReader::Cache.new(10)
+      @cache = GoogleReader::Cache.new(2)
     end
     
     # do a get request to the link
