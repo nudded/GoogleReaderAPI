@@ -9,6 +9,10 @@ puts
 user = GoogleReader::User.new 'willemstoon@gmail.com', pass
 # p user.info
 # p user.subscriptions.feeds
-p user.subscriptions.unread_count
+# p user.subscriptions.unread_count
 p user.subscriptions.total_unread
-# user.subscriptions.add 'https://github.com/nudded.private.atom?token=944f906cf83622181c02f0d05ca467de'
+user.subscriptions.add 'https://github.com/nudded.private.atom?token=944f906cf83622181c02f0d05ca467de'
+sleep 2
+p user.subscriptions.total_unread
+user.subscriptions.remove_if {|feed| feed.title =~ /private feed for nudded/i}
+p user.subscriptions.total_unread

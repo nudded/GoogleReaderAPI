@@ -35,13 +35,9 @@ module GoogleReader
     end
     
     # subscribe to the given url
-    # optionally provide a title, otherwise I will try and parse it
-    def add(url,title=nil)
-      title ||= parse_title(url)
-      p title
-      @api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" ,
-                                                :ac => :subscribe ,
-                                                :title => title
+    # google will set the title for you
+    def add(url)
+      @api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" , :ac => :subscribe 
       update
     end
     
@@ -61,7 +57,6 @@ module GoogleReader
     
     def fetch_list
       json = JSON[@api.get_link 'api/0/subscription/list', :output => :json]['subscriptions']
-
       @feeds = json.map {|hash| GoogleReader::Feed.new(hash,@api) }
     end
     
