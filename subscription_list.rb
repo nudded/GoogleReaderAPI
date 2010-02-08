@@ -3,7 +3,9 @@ module GoogleReader
   class SubscriptionList
     
     require "feed"
+    require "rss_utils"
     
+    include RssUtils
     include Enumerable
     
     def initialize(api)
@@ -23,6 +25,16 @@ module GoogleReader
       hash = {}
       each { |feed| hash[feed] = feed.unread_count }
       hash
+    end
+    
+    # subscribe to the given url
+    # optionally provide a title, otherwise I will try and parse it
+    def add(url,title=nil)
+      title ||= parse_title(url)
+      p title
+      @api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" ,
+                                                :ac => :subscribe ,
+                                                :title => title
     end
     
     def feeds
