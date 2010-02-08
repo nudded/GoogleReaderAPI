@@ -15,6 +15,11 @@ module GoogleReader
       @api = api
     end
     
+    def unsubscribe
+      @api.post_link 'api/0/subscription/edit' :s => "feed/#{url}",
+                                               :ac => :unsubscribe
+    end
+    
     def unread_count
       entry = JSON[@api.cached_unread_count]['unreadcounts'].find {|h| h['id'] == "feed/#{url}"}
       entry ? entry['count'] : 0

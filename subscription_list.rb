@@ -26,6 +26,13 @@ module GoogleReader
       each { |feed| hash[feed] = feed.unread_count }
       hash
     end
+     
+    # yield each feed, if you return true
+    # the feed will be removed from your subscriptions
+    def remove_if
+      each { |feed| feed.unsubscribe if yield feed}
+      update
+    end
     
     # subscribe to the given url
     # optionally provide a title, otherwise I will try and parse it
@@ -35,6 +42,7 @@ module GoogleReader
       @api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" ,
                                                 :ac => :subscribe ,
                                                 :title => title
+      update
     end
     
     def feeds
@@ -45,11 +53,11 @@ module GoogleReader
       @feeds.each {|feed| yield feed}
     end
     
-    private
-    
     def update
       fetch_list
     end
+
+    private
     
     def fetch_list
       json = JSON[@api.get_link 'api/0/subscription/list', :output => :json]['subscriptions']
