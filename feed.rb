@@ -29,13 +29,15 @@ module GoogleReader
       entry = JSON[@api.cached_unread_count]['unreadcounts'].find {|h| h['id'] == "feed/#{url}"}
       entry ? entry['count'] : 0
     end
-  
+    
+    # return all the unread items in an array
     def all_unread_items
       unread_items(unread_count)
     end
     
     # will return an array of RSS::Atom::Feed::Entry objects.
     # will try to return the amount of unread items you specify. unless there are no more.
+    # will return 20 unread items by default.
     def unread_items(count = 20)
       atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read', :c => @continuation
       RSS::Parser.parse(atom_feed).entries.to_a
