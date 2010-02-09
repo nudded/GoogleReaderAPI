@@ -1,5 +1,8 @@
 module GoogleReader
+  
   class Feed
+  
+    require "rexml/document"
     
     attr_reader :url, :title
     
@@ -25,9 +28,12 @@ module GoogleReader
       entry ? entry['count'] : 0
     end
   
-    def unread_items
-      @api.get_link "atom/feed/#{url}", :xt => 'user/-/state/com.google/read'
-    end    
+    def unread_items(count = 20)
+      atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read'
+      parse_continuation(atom_feed)
+      # for now
+      atom_feed
+    end
     
     def inspect
       to_s
@@ -36,6 +42,16 @@ module GoogleReader
     def to_s
       "<<Feed: #{title} url:#{url}>>"
     end
+    
+    private
+    
+    def parse_continuation(atom_feed)
+      # we parse the xml, looking for the continuation field.
+      element = REXML::Document.new(atom_feed).elements.first.elements['gr:continuation']
+      # if we found it, save the value else put nil in it.
+      @continuation = element ? element.text : nil
+    end
+    
     
   end
 end
