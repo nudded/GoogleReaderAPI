@@ -4,6 +4,7 @@ GoogleReaderAPI
 Still a work in progress. What is working so far?
 
  * you can see which feeds you are subscribed to.
+ * you can subscribe and unsubscribe to feeds.
  * you can get the unread items and the unread count for every feed.
  
 So far that's about it.
