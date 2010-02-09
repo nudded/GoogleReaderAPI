@@ -30,19 +30,15 @@ module GoogleReader
       entry ? entry['count'] : 0
     end
   
+    def all_unread_items
+      unread_items(unread_count)
+    end
+    
     # will return an array of RSS::Atom::Feed::Entry objects.
+    # will try to return the amount of unread items you specify. unless there are no more.
     def unread_items(count = 20)
       atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read', :c => @continuation
-      parse_continuation(atom_feed)
-      entries = RSS::Parser.parse(atom_feed).entries.to_a
-      
-      # recursively add more unread items
-      if count > 20
-        entries.concat unread_items(count-20)
-      else
-        @continuation = nil
-        return entries
-      end
+      RSS::Parser.parse(atom_feed).entries.to_a
     end
     
     def inspect
