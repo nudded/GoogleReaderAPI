@@ -3,6 +3,8 @@ module GoogleReader
   class Feed
   
     require "rexml/document"
+    require "rss/parser"
+    
     
     attr_reader :url, :title
     
@@ -28,16 +30,17 @@ module GoogleReader
       entry ? entry['count'] : 0
     end
   
+    # will return an array of RSS::Atom::Feed::Entry objects.
     def unread_items(count = 20)
       atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read', :c => @continuation
       parse_continuation(atom_feed)
-
+      entries = RSS::Parser.parse(atom_feed).entries.to_a
       if count > 20
         count -= 20
-        atom_feed << unread_items(count)
+        entries.concat unread_items(count)
       end
-      # for now
-      atom_feed
+      
+      entries
     end
     
     def inspect
