@@ -29,7 +29,7 @@ module GoogleReader
     end
   
     def unread_items(count = 20)
-      atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read'
+      atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read', :c => @continuation
       parse_continuation(atom_feed)
       # for now
       atom_feed
