@@ -35,12 +35,14 @@ module GoogleReader
       atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read', :c => @continuation
       parse_continuation(atom_feed)
       entries = RSS::Parser.parse(atom_feed).entries.to_a
-      if count > 20
-        count -= 20
-        entries.concat unread_items(count)
-      end
       
-      entries
+      # recursively add more unread items
+      if count > 20
+        entries.concat unread_items(count-20)
+        return entries
+      else
+        return []
+      end
     end
     
     def inspect
