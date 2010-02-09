@@ -39,9 +39,9 @@ module GoogleReader
       # recursively add more unread items
       if count > 20
         entries.concat unread_items(count-20)
-        return entries
       else
-        return []
+        @continuation = nil
+        return entries
       end
     end
     
