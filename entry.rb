@@ -19,7 +19,11 @@ module GoogleReader
       def toggle_star
         edit_tag 'user/-/state/com.google/starred'
       end
-    
+      
+      def to_s
+        "<<Entry: #{@entry.title.content} >>"
+      end
+      
       private 
     
       def edit_tag(tag_identifier)
