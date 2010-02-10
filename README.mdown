@@ -6,6 +6,7 @@ Still a work in progress. What is working so far?
  * you can see which feeds you are subscribed to.
  * you can subscribe and unsubscribe to feeds.
  * you can get the unread items and the unread count for every feed.
+ * you can toggle readstate, like, star of entries
  
 So far that's about it.
 What's left to be done is a huge list.
