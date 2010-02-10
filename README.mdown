@@ -10,3 +10,10 @@ Still a work in progress. What is working so far?
  
 So far that's about it.
 What's left to be done is a huge list.
+
+Todo
+----
+
+ * provide a method to get items from a feed (doesn't matter if they're read or not).
+ * provide nicer convenience methods. (user.subscriptions.feeds is not a good way to access your feeds).
+ * labels should be part of the api.
