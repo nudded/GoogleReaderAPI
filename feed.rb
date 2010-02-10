@@ -51,15 +51,5 @@ module GoogleReader
       "<<Feed: #{title} url:#{url}>>"
     end
     
-    private
-    
-    def parse_continuation(atom_feed)
-      # we parse the xml, looking for the continuation field.
-      element = REXML::Document.new(atom_feed).elements.first.elements['gr:continuation']
-      # if we found it, save the value else put nil in it.
-      @continuation = element ? element.text : nil
-    end
-    
-    
   end
 end
