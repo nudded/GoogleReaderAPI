@@ -4,7 +4,7 @@ module GoogleReader
   
     require "rexml/document"
     require "rss/parser"
-    
+    require "entry"
     
     attr_reader :url, :title
     
@@ -40,7 +40,7 @@ module GoogleReader
     # will return 20 unread items by default.
     def unread_items(count = 20)
       atom_feed = @api.get_link "atom/feed/#{url}", :n => count, :xt => 'user/-/state/com.google/read', :c => @continuation
-      RSS::Parser.parse(atom_feed).entries.to_a
+      RSS::Parser.parse(atom_feed).entries.map {|e| Entry.new(@api,e) }
     end
     
     # takes an RSS::Atom::Feed::Entry as argument. 
