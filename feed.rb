@@ -43,6 +43,15 @@ module GoogleReader
       RSS::Parser.parse(atom_feed).entries.to_a
     end
     
+    # takes an RSS::Atom::Feed::Entry as argument. 
+    # you cannot create those yourself, they have to come from google.
+    # TODO it is better to use another object for feed entries. since you'll want to call toggle_read on them
+    def toggle_read_state(entry)
+      @api.post_link "api/0/edit-tag" , :a => 'user/-/state/com.google/read' ,
+                                        :s => entry.parent.id.content.to_s.scan(/feed\/.*/) ,
+                                        :i => entry.id.content.to_s
+    end
+    
     def inspect
       to_s
     end
