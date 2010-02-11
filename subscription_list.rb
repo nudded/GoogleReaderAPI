@@ -4,6 +4,7 @@ module GoogleReader
     
     require "feed"
     require "rss_utils"
+    require "cgi"
     
     include RssUtils
     include Enumerable
@@ -39,6 +40,11 @@ module GoogleReader
     def add(url)
       @api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" , :ac => :subscribe 
       update
+    end
+
+    # will return an array of entries with label
+    def items_with_label(label)
+      create_entries(@api.get_link "atom/user/-/label/#{CGI::escape label}")
     end
 
     def feeds
