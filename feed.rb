@@ -2,9 +2,10 @@ module GoogleReader
   
   class Feed
   
-    require "rexml/document"
-    require "rss/parser"
+    require "rss_utils"
     require "entry"
+    
+    include RssUtils
     
     attr_reader :url, :title
     
@@ -29,6 +30,7 @@ module GoogleReader
       entry = JSON[@api.cached_unread_count]['unreadcounts'].find {|h| h['id'] == "feed/#{url}"}
       entry ? entry['count'] : 0
     end
+    
     # return count read items
     def read_items(count=20)
       create_entries get_user_items('read',:n => count)
@@ -68,15 +70,10 @@ module GoogleReader
     def get_user_items(state,args={})
       @api.get_link "atom/user/-/state/com.google/#{state}" , args
     end
+    
     def get_feed_items(args={})
       @api.get_link "atom/feed/#{url}" , args
     end
-    
-    def create_entries(atom_feed)
-      RSS::Parser.parse(atom_feed).entries.map {|e| Entry.new(@api,e) }
-    end
-    
-    
+
   end
-  
 end

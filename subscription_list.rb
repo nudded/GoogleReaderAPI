@@ -40,7 +40,7 @@ module GoogleReader
       @api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" , :ac => :subscribe 
       update
     end
-    
+
     def feeds
       @feeds
     end
