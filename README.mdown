@@ -1,19 +1,52 @@
 GoogleReaderAPI
 ===============
 
-Still a work in progress. What is working so far?
+A Google Reader api. Programmed in ruby. This is an unofficial api.
 
- * you can see which feeds you are subscribed to.
- * you can subscribe and unsubscribe to feeds.
- * you can get the unread items and the unread count for every feed.
- * you can toggle readstate, like, star of entries
- 
-So far that's about it.
-What's left to be done is a huge list.
+Usage
+-----
 
+First you need to authenticate as a user.
+
+    # password should be asked by the app using the api
+    # you probably don't want to type that in cleartext here
+    user = GoogleReader::User.new 'willemstoon@gmail.com' , password
+
+Then to get to your subscriptions:
+    
+    # this part of the api will probably change (it's not so nice atm)
+    subscriptions = user.subscriptions
+
+you can access your feeds from there
+
+    subscriptions.feeds
+
+which will return an array of GoogleReader::Feed objects.
+then you can get the unread items, the read items, ...
+
+    hn = subscriptions.feeds.find {|feed| feed.title =~ /hacker news/i }
+    # return 3 unread items (ordered by date)
+    hn.unread_items(3)
+    # return all the read items
+    hn.read_items
+    # all the starred items
+    hn.starred_items
+    
+you get the idea.
+you can like items, star items, and mark them as read or unread.
+
+    hn.all_unread_items.each {|item| item.toggle_read}
+    
+subscribing to new feeds is also easy
+
+    user.subscriptions.add "any feed url here"
+
+unsubscribing is best done via `remove_if` method
+
+    user.subscriptions.remove_if {|feed| feed.title =~ /hacker news/i}
+    
 Todo
 ----
 
- * provide a method to get items from a feed (doesn't matter if they're read or not).
  * provide nicer convenience methods. (user.subscriptions.feeds is not a good way to access your feeds).
  * labels should be part of the api.
