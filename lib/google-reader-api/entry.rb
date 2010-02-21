@@ -1,4 +1,4 @@
-module GoogleReader
+module GoogleReaderApi
   class Entry
   
     attr_reader :entry

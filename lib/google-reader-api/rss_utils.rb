@@ -1,14 +1,13 @@
-module GoogleReader
-  module RssUtils 
+module GoogleReaderApi
+  module RssUtils
     
     require "rss/parser"
     require "rss/atom"
-    require "entry"
 
     private
 
     def create_entries(atom_feed)
-      RSS::Parser.parse(atom_feed).entries.map {|e| GoogleReader::Entry.new(@api,e) }
+      RSS::Parser.parse(atom_feed).entries.map {|e| GoogleReaderApi::Entry.new(@api,e) }
     end
     
   end

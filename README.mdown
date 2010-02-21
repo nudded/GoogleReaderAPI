@@ -10,7 +10,7 @@ First you need to authenticate as a user.
 
     # password should be asked by the app using the api
     # you probably don't want to type that in cleartext here
-    user = GoogleReader::User.new 'willemstoon@gmail.com' , password
+    user = GoogleReaderApi::User.new 'willemstoon@gmail.com' , password
 
 Then to get to your subscriptions:
     

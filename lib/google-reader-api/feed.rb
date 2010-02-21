@@ -1,11 +1,8 @@
-module GoogleReader
+module GoogleReaderApi
   
   class Feed
   
-    require "rss_utils"
-    require "entry"
-    
-    include RssUtils
+    include GoogleReaderApi::RssUtils
     
     attr_reader :url, :title
     

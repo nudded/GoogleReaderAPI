@@ -1,17 +1,16 @@
-module GoogleReader
+module GoogleReaderApi
   
   class Api
     
     require "cgi"
     require "net/https"
     require "uri"
-    require "cache"
     
     BASE_URL = "http://www.google.com/reader/"
     
     def initialize(email,password)
       request_sid(email,password)
-      @cache = GoogleReader::Cache.new(2)
+      @cache = GoogleReaderApi::Cache.new(2)
     end
     
     # do a get request to the link

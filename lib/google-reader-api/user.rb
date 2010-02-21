@@ -1,16 +1,13 @@
-module GoogleReader
+module GoogleReaderApi
   
   class User
-    
-    require "api"
-    require "subscription_list"
     
     require "json"
     # maybe someone would like to access the api for a user
     attr_reader :api
     
     def initialize(email,password)
-      @api = GoogleReader::Api::new email,password
+      @api = GoogleReaderApi::Api::new email,password
     end
     
     def info
@@ -18,7 +15,7 @@ module GoogleReader
     end
     
     def subscriptions
-      @subscriptions ||= GoogleReader::SubscriptionList.new @api
+      @subscriptions ||= GoogleReaderApi::SubscriptionList.new @api
     end
     
     def feeds

@@ -1,12 +1,10 @@
-module GoogleReader
+module GoogleReaderApi
   
   class SubscriptionList
     
-    require "feed"
-    require "rss_utils"
     require "cgi"
     
-    include RssUtils
+    include GoogleReaderApi::RssUtils
     include Enumerable
     
     def initialize(api)
@@ -63,7 +61,7 @@ module GoogleReader
     
     def fetch_list
       json = JSON[@api.get_link 'api/0/subscription/list', :output => :json]['subscriptions']
-      @feeds = json.map {|hash| GoogleReader::Feed.new(hash,@api) }
+      @feeds = json.map {|hash| GoogleReaderApi::Feed.new(hash,@api) }
     end
     
   end

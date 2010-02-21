@@ -1,4 +1,4 @@
-module GoogleReader
+module GoogleReaderApi
   class Cache
     
     def initialize(time)
