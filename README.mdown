@@ -19,12 +19,12 @@ Then to get to your subscriptions:
 
 you can access your feeds from there
 
-    subscriptions.feeds
+    user.feeds
 
 which will return an array of GoogleReader::Feed objects.
 then you can get the unread items, the read items, ...
 
-    hn = subscriptions.feeds.find {|feed| feed.title =~ /hacker news/i }
+    hn = user.feeds.find {|feed| feed.title =~ /hacker news/i }
     # return 3 unread items (ordered by date)
     hn.unread_items(3)
     # return all the read items
