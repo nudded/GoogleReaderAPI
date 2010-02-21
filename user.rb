@@ -21,5 +21,9 @@ module GoogleReader
       @subscriptions ||= GoogleReader::SubscriptionList.new @api
     end
     
+    def feeds
+      subscriptions.feeds
+    end
+    
   end
 end
