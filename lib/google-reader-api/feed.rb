@@ -44,7 +44,7 @@ module GoogleReaderApi
     
     # return all the unread items in an array
     def all_unread_items
-      unread_items(unread_count)
+      unread_count > 0 ? unread_items(unread_count) : []
     end
     
     # will return an array of GoogleReader::Feed::Entry objects.

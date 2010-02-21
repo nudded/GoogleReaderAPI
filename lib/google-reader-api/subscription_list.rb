@@ -39,7 +39,12 @@ module GoogleReaderApi
       @api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" , :ac => :subscribe 
       update
     end
-
+    
+    # return an array of unread items
+    def unread_items
+      feeds.map(&:all_unread_items)
+    end
+    
     # will return an array of entries with label
     def items_with_label(label)
       create_entries(@api.get_link "atom/user/-/label/#{CGI::escape label}")
