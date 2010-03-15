@@ -2,6 +2,7 @@ GoogleReaderAPI
 ===============
 
 A Google Reader api. Programmed in ruby. This is an unofficial api.
+Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
 Usage
 -----
