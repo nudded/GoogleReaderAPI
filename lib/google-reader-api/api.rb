@@ -69,7 +69,7 @@ module GoogleReaderApi
 
     # returns the argumentstring based on the hash it is given
     def argument_string(args)
-      args.to_a.map { |v| "#{v[0]}=#{v[1]}" }.join('&')
+      args.to_a.map { |v| v.join '=' }.join('&')
     end
    
     def token
