@@ -7,16 +7,25 @@ Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.p
 Usage
 -----
 
-First you need to authenticate as a user.
+If you would like to implement your own methods, you can quite easily use
+the api class provided.
+    
+    api = GoogleReaderApi::Api.new email, pass
+
+and then you can perform requests using the `get_link` and `post_link` methods.
+
+    # this will give the user info.
+    api.get_link "api/0/user-info"
+    
+    # this will add a feed 
+    api.post_link 'api/0/subscription/edit', :s => "feed/#{url}" , :ac => :subscribe
+
+The following methods all use the `Api` class, so there is no magic 
+involved.
 
     # password should be asked by the app using the api
     # you probably don't want to type that in cleartext here
     user = GoogleReaderApi::User.new 'willemstoon@gmail.com' , password
-
-Then to get to your subscriptions:
-    
-    # this part of the api will probably change (it's not so nice atm)
-    subscriptions = user.subscriptions
 
 you can access your feeds from there
 
