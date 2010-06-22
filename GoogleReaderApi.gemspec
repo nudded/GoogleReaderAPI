@@ -9,15 +9,19 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toon Willems"]
-  s.date = %q{2010-05-16}
+  s.date = %q{2010-06-22}
   s.description = %q{a google reader api (unofficial) written in ruby}
   s.email = %q{willemstoon@gmail.com}
   s.extra_rdoc_files = [
     "README.mdown"
   ]
   s.files = [
-    "License",
+    ".gitignore",
+     "GoogleReaderApi.gemspec",
+     "License",
      "README.mdown",
+     "Rakefile",
+     "VERSION",
      "lib/google-reader-api/api.rb",
      "lib/google-reader-api/cache.rb",
      "lib/google-reader-api/entry.rb",
