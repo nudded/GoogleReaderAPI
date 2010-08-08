@@ -9,7 +9,7 @@ module GoogleReaderApi
     BASE_URL = "http://www.google.com/reader/"
     
     def initialize(email,password)
-      request_sid(email,password)
+      request_auth(email,password)
       @cache = GoogleReaderApi::Cache.new(2)
     end
     
@@ -35,7 +35,6 @@ module GoogleReaderApi
     # the post data as a hash
     def post_request(url,args)
       uri = URI.parse(url)
-      args[:T] = token
       req = Net::HTTP::Post.new(uri.path)
       req.set_form_data(args)
       request(uri,req)
@@ -55,7 +54,7 @@ module GoogleReaderApi
 
     def request(uri,request)
       # add the cookie to the http header
-      request.add_field('Cookie',user_cookie)
+      request.add_field('Authorization',"GoogleLogin auth=#{auth}")
       res = Net::HTTP.start(uri.host,uri.port) do |http|
         http.request(request)
       end
@@ -72,34 +71,14 @@ module GoogleReaderApi
       args.to_a.map { |v| v.join '=' }.join('&')
     end
    
-    def token
-      url = URI.parse "http://www.google.com/reader/api/0/token"
-      res = Net::HTTP.start(url.host,url.port) do |http|
-        http.get(url.path,"Cookie" => user_cookie)
-      end
-      res.body
-    end
-
-    def user_cookie
-      CGI::Cookie::new('name' => 'SID' , 'value' => sid , 
-                       'path' => '/' , 'domain'  => '.google.com').to_s
-    end
-
-    def sid
-      @sid 
+    def auth
+      @auth
     end
     
-    def request_sid(email,password)
-      password = CGI.escape(password)
-      email = CGI.escape(email)
-      url = URI.parse "https://www.google.com/accounts/ClientLogin?service=reader&Email=#{email}&Passwd=#{password}"
-      http = Net::HTTP.new(url.host,url.port)
-      http.use_ssl = true
-      res,data = http.get("#{url.path}?#{url.query}")
-
-      raise "could not authenticate" if res.code != "200"
-      
-      @sid = data.match(/SID=(.+?)\n/)[1]
+    def request_auth(email,password)
+      login = GoogleLogin::ClientLogin.new service: 'reader', source: 'nudded-greader-0.1'
+      login.authenticate email, password
+      @auth = login.auth
     end
     
   end
