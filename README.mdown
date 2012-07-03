@@ -10,7 +10,13 @@ Usage
 If you would like to implement your own methods, you can quite easily use
 the api class provided.
     
-    api = GoogleReaderApi::Api.new email, pass
+    api = GoogleReaderApi::Api.new {:email => 'example@gmail.com', :password => 'the pass'}
+    
+    # OR
+    
+    api = GoogleReaderApi::Api.new {:auth => 'token'}
+    
+    
 
 and then you can perform requests using the `get_link` and `post_link` methods.
 
@@ -25,7 +31,12 @@ involved.
 
     # password should be asked by the app using the api
     # you probably don't want to type that in cleartext here
-    user = GoogleReaderApi::User.new 'willemstoon@gmail.com' , password
+    user = GoogleReaderApi::User.new {:email => 'example@gmail.com', :password => 'the pass'}
+    
+    # OR
+    
+    user = GoogleReaderApi::User.new {:auth => 'token'}
+
 
 you can access your feeds from there
 

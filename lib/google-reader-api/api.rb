@@ -8,7 +8,6 @@ module GoogleReaderApi
 
     BASE_URL = "http://www.google.com/reader/"
 
-    # attr_reader :auth
 
     # specify either the :email and :password or the :auth token you got in the past
     #
@@ -42,8 +41,6 @@ module GoogleReaderApi
     def cached_unread_count
       @cache['unread-count'] ||= get_link 'api/0/unread-count', :output => :json
     end
-
-    # private
 
     # url as a string
     # the post data as a hash
