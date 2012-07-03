@@ -8,6 +8,8 @@ module GoogleReaderApi
 
     BASE_URL = "http://www.google.com/reader/"
 
+    # attr_reader :auth
+
     # specify either the :email and :password or the :auth token you got in the past
     #
     # [:email] the user's email address for login purposes
@@ -41,7 +43,7 @@ module GoogleReaderApi
       @cache['unread-count'] ||= get_link 'api/0/unread-count', :output => :json
     end
 
-    private
+    # private
 
     # url as a string
     # the post data as a hash
