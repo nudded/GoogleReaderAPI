@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{GoogleReaderApi}
-  s.version = "0.3.6"
+  s.name = "GoogleReaderApi"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Toon Willems}]
-  s.date = %q{2011-08-21}
-  s.description = %q{a google reader api (unofficial) written in ruby}
-  s.email = %q{willemstoon@gmail.com}
+  s.authors = ["Toon Willems"]
+  s.date = "2012-07-03"
+  s.description = "a google reader api (unofficial) written in ruby"
+  s.email = "willemstoon@gmail.com"
   s.extra_rdoc_files = [
     "README.mdown"
   ]
@@ -31,10 +31,10 @@ Gem::Specification.new do |s|
     "lib/google-reader-api/user.rb",
     "lib/google_reader_api.rb"
   ]
-  s.homepage = %q{http://github.com/nudded/GoogleReaderAPI}
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.8}
-  s.summary = %q{a google reader api (unofficial) written in ruby}
+  s.homepage = "http://github.com/nudded/GoogleReaderAPI"
+  s.require_paths = ["lib"]
+  s.rubygems_version = "1.8.11"
+  s.summary = "a google reader api (unofficial) written in ruby"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
