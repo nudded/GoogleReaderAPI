@@ -15,7 +15,10 @@ the api class provided.
     # OR
     
     api = GoogleReaderApi::Api.new {:auth => 'token'}
-    
+
+    # OR If your token was getted from oauth2 (bearer token)
+
+    api = GoogleReaderApi::Api.new {:auth => 'token', :auth_type => :bearer}    
     
 
 and then you can perform requests using the `get_link` and `post_link` methods.
