@@ -20,6 +20,7 @@ module GoogleReaderApi
     def initialize(options)
       if options[:auth]
         @auth = options[:auth]
+        @auth_type = options[:auth_type] || :client_login
       else
         request_auth(options[:email],options[:password])
       end
@@ -65,7 +66,11 @@ module GoogleReaderApi
 
     def request(uri,request)
       # add the cookie to the http header
-      request.add_field('Authorization',"GoogleLogin auth=#{auth}")
+      if @auth_type == :bearer
+        request.add_field('Authorization',"Bearer #{auth}")
+      else
+        request.add_field('Authorization',"GoogleLogin auth=#{auth}")
+      end
       res = Net::HTTP.start(uri.host,uri.port) do |http|
         http.request(request)
       end
