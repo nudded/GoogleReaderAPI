@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "GoogleReaderApi"
-  s.version = "0.4.0"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Toon Willems"]
-  s.date = "2012-07-03"
+  s.date = "2013-04-09"
   s.description = "a google reader api (unofficial) written in ruby"
   s.email = "willemstoon@gmail.com"
   s.extra_rdoc_files = [
@@ -33,16 +33,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/nudded/GoogleReaderAPI"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "2.0.3"
   s.summary = "a google reader api (unofficial) written in ruby"
-
-  if s.respond_to? :specification_version then
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-    else
-    end
-  else
-  end
 end
 
